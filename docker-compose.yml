@@ -2,24 +2,26 @@ version: '3.7'
 
 services:
   web:
-    build: ./app
+    build: 
+      context: .
+      dockerfile: ./build/Dockerfile_dev
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./app/:/usr/src/app/
+      - ./apps/:/usr/src/apps/
     ports:
       - 9000:8000
     env_file:
-      - ./.env.dev
-#     depends_on:
-#       - db
-#   db:
-#     image: postgres:12.0-alpine
-#     volumes:
-#       - postgres_data:/var/lib/postgresql/data/
-#     environment:
-#       - POSTGRES_USER=hello_django
-#       - POSTGRES_PASSWORD=hello_django
-#       - POSTGRES_DB=hello_django_dev
+      - ./build/.env.dev
+    depends_on:
+      - db
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=baseuser
+      - POSTGRES_PASSWORD=basepass
+      - POSTGRES_DB=basepostgres
 
-# volumes:
-#   postgres_data:
+volumes:
+  postgres_data:

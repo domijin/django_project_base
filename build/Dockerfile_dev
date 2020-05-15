@@ -1,0 +1,29 @@
+# pull official base image
+FROM python:3.8.0-alpine
+
+# set work directory
+WORKDIR /usr/src
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install psycopg2 dependencies
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
+
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./build/requirements.txt /usr/src/requirements.txt
+RUN pip install -r /usr/src/requirements.txt
+RUN rm /usr/src/requirements.txt
+
+# copy entrypoint.sh
+RUN mkdir -p /usr/src/scripts
+COPY ./build/entrypoint.sh /usr/src/scripts/entrypoint.sh
+
+# copy project base
+COPY ./base_django/ /usr/src/
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/scripts/entrypoint.sh"]
