@@ -11,7 +11,8 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py flush --no-input
+## Removes all data from the database and re-executes any post-synchronization handlers
+# python manage.py flush --no-input
 python manage.py migrate
 python manage.py collectstatic --no-input --clear
 
