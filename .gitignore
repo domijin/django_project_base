@@ -1,6 +1,11 @@
 *.pyc
 __pycache
-.DS_Store
 .env.dev
 .env.prod
 .env.prod.db
+*.log
+*.pot
+local_settings.py
+/static
+/media
+/db.sqlite3
