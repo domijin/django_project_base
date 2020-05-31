@@ -6,6 +6,6 @@ __pycache
 *.log
 *.pot
 local_settings.py
-/static
+apps/static
 /media
 /db.sqlite3
